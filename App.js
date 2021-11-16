@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import {
   Alert,
@@ -7,11 +6,14 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  FlatList,
+  
 } from "react-native";
 import './styles/app_styles.css'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import Listado from "./components/listado";
 
-export default class App extends React.Component {
+class Home extends React.Component {
   //definicion del constructor y sus variables de estado
 
   constructor(props) {
@@ -155,11 +157,13 @@ export default class App extends React.Component {
 
   render() {
     return (
+
       <View style={styles.MainContainer}>
         <Text style={{ fontSize: 20, textAlign: "center", marginBottom: 7 }}>
           {" "}
           Registro de Estudiante{" "}
         </Text>
+
         <TextInput
           placeholder="Ingrese el Id del estudiante"
           onChangeText={(TextInputValue) =>
@@ -169,6 +173,7 @@ export default class App extends React.Component {
           style={styles.TextInputStyleClass}
           value={this.state.Student_ID}
         />
+
         <TextInput
           placeholder="Ingrese el nombre del estudiante"
           onChangeText={(TextInputValue) =>
@@ -179,6 +184,7 @@ export default class App extends React.Component {
           value={this.state.Student_Name}
           autoFocus={true}
         />
+
         <TextInput
           placeholder="Ingrese la clase del estudiante"
           onChangeText={(TextInputValue) =>
@@ -188,6 +194,7 @@ export default class App extends React.Component {
           style={styles.TextInputStyleClass}
           value={this.state.Student_Class}
         />
+
         <TextInput
           placeholder="Ingrese número de teléfono"
           onChangeText={(TextInputValue) =>
@@ -197,6 +204,7 @@ export default class App extends React.Component {
           style={styles.TextInputStyleClass}
           value={this.state.Student_Phone_Num}
         />
+
         <TextInput
           placeholder="Ingrese el correo electrónico"
           onChangeText={(TextInputValue) =>
@@ -206,6 +214,7 @@ export default class App extends React.Component {
           style={styles.TextInputStyleClass}
           value={this.state.Student_Email}
         />
+
         <TouchableOpacity
           activeOpacity={0.4}
           style={styles.TouchableOpacityStyle}
@@ -213,6 +222,7 @@ export default class App extends React.Component {
         >
           <Text style={styles.TextStyle}> Agregar </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.4}
           style={styles.TouchableOpacityStyle}
@@ -220,6 +230,7 @@ export default class App extends React.Component {
         >
           <Text style={styles.TextStyle}> Buscar </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.4}
           style={styles.TouchableOpacityStyle}
@@ -227,6 +238,7 @@ export default class App extends React.Component {
         >
           <Text style={styles.TextStyle}> Atualizar </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.4}
           style={styles.TouchableOpacityStyle}
@@ -234,32 +246,40 @@ export default class App extends React.Component {
         >
           <Text style={styles.TextStyle}> Eliminar </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.4}
           style={styles.TouchableOpacityStyle}
+          onPress={() => this.props.navigation.navigate('Estudiantes')}
         >
           <Text style={styles.TextStyle}> Listar </Text>
         </TouchableOpacity>
-        <FlatList
-          style={styles.FlatList}        
-          data={this.state.dataSource}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                alert(item.student_class + " " + item.student_email)
-              }
-              style={styles.TouchableOpacityStyle}
-            >
-              <Text>
-                {item.student_name} - {item.student_phone_num} - {item.student_email}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
+
+
       </View>
     );
   }
 }
+//IMPORTACION DE LOS COMPONENTES
+const RootStack = createStackNavigator(
+  {
+    Inicio: Home,
+    Estudiantes:Listado,
+    //Sesion:User
+  },
+  {
+    initialRouteName: 'Inicio',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
+
 
 const styles = StyleSheet.create({
 

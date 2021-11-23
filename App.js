@@ -12,6 +12,7 @@ import './styles/app_styles.css'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Listado from "./components/listado";
+import Users from "./components/users";
 
 class Home extends React.Component {
   //definicion del constructor y sus variables de estado
@@ -159,6 +160,9 @@ class Home extends React.Component {
     return (
 
       <View style={styles.MainContainer}>
+        <Text style={{color:'red'}}>
+          Bienvenid@: {JSON.stringify(this.props.navigation.getParam('Name', 'sin usuario'))}
+        </Text>
         <Text style={{ fontSize: 20, textAlign: "center", marginBottom: 7 }}>
           {" "}
           Registro de Estudiante{" "}
@@ -255,6 +259,14 @@ class Home extends React.Component {
           <Text style={styles.TextStyle}> Listar </Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          activeOpacity={0.4}
+          style={styles.TouchableOpacityStyle}
+          onPress={() => this.props.navigation.navigate('Sesion')}
+        >
+          <Text style={styles.TextStyle}> Iniciar Sesion </Text>
+        </TouchableOpacity>
+
 
       </View>
     );
@@ -265,10 +277,10 @@ const RootStack = createStackNavigator(
   {
     Inicio: Home,
     Estudiantes:Listado,
-    //Sesion:User
+    Sesion:Users
   },
   {
-    initialRouteName: 'Inicio',
+    initialRouteName: 'Sesion',
   }
 );
 
